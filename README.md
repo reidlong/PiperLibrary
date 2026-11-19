@@ -18,6 +18,18 @@ Amazon Kindle links have no ISBN; use the hardcover/paperback page instead.
 If a lookup comes up empty, pass `--title` and `--author` yourself.
 Use `--no-author` for books where an author doesn't make sense, like a Bible.
 
+### Using your own cover image
+
+If the lookup's cover is missing or wrong, save the image from the store page (Amazon's
+`.avif` files are fine) and pass it with `--cover`:
+
+```sh
+python3 tools/add_book.py <link or ISBN> --cover ~/Downloads/71RZ+MWzbUL._SL1400_.jpg.avif
+```
+
+For a new book this adds it with that cover. For a book already in `books.js` it just
+swaps in the new cover. The image is converted to an 800px JPEG in `covers/`.
+
 Then commit `books.js` and the new file in `covers/`, and push.
 
 ### By hand
