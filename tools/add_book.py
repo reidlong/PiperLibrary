@@ -183,6 +183,8 @@ def main() -> None:
     parser.add_argument("--series", help='e.g. "Elephant & Piggie"')
     parser.add_argument("--title", help="override the looked-up title")
     parser.add_argument("--author", help="override the looked-up author")
+    parser.add_argument("--no-author", action="store_true",
+                        help="leave the author off, e.g. for a Bible")
     args = parser.parse_args()
 
     source = args.source.strip()
@@ -199,17 +201,17 @@ def main() -> None:
     meta = lookup_open_library(isbn) or {}
     google = lookup_google_books(isbn) or {}
     title = args.title or meta.get("title") or google.get("title")
-    author = args.author or meta.get("author") or google.get("author")
-    if not title or not author:
-        sys.exit(f"Couldn't find title/author for ISBN {isbn}. "
-                 "Re-run with --title and --author to add it by hand.")
+    author = None if args.no_author else (args.author or meta.get("author") or google.get("author"))
+    if not title:
+        sys.exit(f"Couldn't find a title for ISBN {isbn}. "
+                 "Re-run with --title (and --author) to add it by hand.")
 
     cover = download_cover(isbn, meta.get("cover_urls", []) + google.get("cover_urls", []))
 
     entry = {"title": title, "author": author, "isbn": isbn, "series": args.series,
              "notes": args.notes, "cover": cover}
     append_entry(entry)
-    print(f"Added: {title} by {author} (ISBN {isbn})")
+    print(f"Added: {title}{f' by {author}' if author else ''} (ISBN {isbn})")
     print(f"  cover: {cover or 'none found; the page shows a colored title card'}")
 
 

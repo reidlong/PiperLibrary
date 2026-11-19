@@ -16,6 +16,7 @@ It finds the ISBN, looks up the title and author (Open Library, then Google Book
 saves the cover to `covers/`, and adds the book to `books.js`. Only Python 3 is needed.
 Amazon Kindle links have no ISBN; use the hardcover/paperback page instead.
 If a lookup comes up empty, pass `--title` and `--author` yourself.
+Use `--no-author` for books where an author doesn't make sense, like a Bible.
 
 Then commit `books.js` and the new file in `covers/`, and push.
 

@@ -129,9 +129,10 @@
       return t.toLowerCase().replace(/^(the|a|an)\s+/, "");
     }
 
-    // Sort authors by last name.
-    function authorKey(a) {
-      const parts = a.trim().toLowerCase().split(/\s+/);
+    // Sort authors by last name; books with no author sort last, by title.
+    function authorKey(book) {
+      if (!book.author) return "\uffff" + titleKey(book.title);
+      const parts = book.author.trim().toLowerCase().split(/\s+/);
       return parts[parts.length - 1] + " " + parts.join(" ");
     }
 
@@ -162,7 +163,7 @@
 
     function render() {
       const q = searchEl.value.trim().toLowerCase();
-      const key = sortEl.value === "author" ? b => authorKey(b.author) : b => titleKey(b.title);
+      const key = sortEl.value === "author" ? authorKey : b => titleKey(b.title);
 
       const books = BOOKS
         .filter(b => !q || [b.title, b.author, b.series, b.notes]
@@ -180,7 +181,7 @@
             ${cover(b)}
             <div class="info">
               <div class="title">${escapeHtml(b.title)}</div>
-              <div class="author">${escapeHtml(b.author)}</div>
+              ${b.author ? `<div class="author">${escapeHtml(b.author)}</div>` : ""}
               ${b.series || b.notes ? `<div class="meta">${escapeHtml([b.series, b.notes].filter(Boolean).join(" · "))}</div>` : ""}
             </div>
           </li>`).join("")
