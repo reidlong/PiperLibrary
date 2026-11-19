@@ -40,4 +40,6 @@ const BOOKS = [
   { title: "Perfect Pets", author: "Priddy Books Staff", isbn: "9780312498603", cover: "covers/9780312498603.jpg" },
   { title: "Computer Engineering for Big Babies", author: "Chase Roberts", isbn: "9781735208749", cover: "covers/9781735208749.jpg" },
   { title: "Computer Engineering for Babies", author: "Chase Roberts", cover: "covers/computer-engineering-for-babies.jpg" },
+  { title: "Talking like the rain", author: "X. J. Kennedy, Dorothy M. Kennedy, Jane Dyer", isbn: "9780316488891", cover: "covers/9780316488891.jpg" },
+  { title: "Carl goes shopping", author: "Alexandra Day", isbn: "9780374311018", cover: "covers/9780374311018.jpg" },
 ];
